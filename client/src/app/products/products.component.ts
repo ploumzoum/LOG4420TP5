@@ -20,6 +20,7 @@ export class ProductsComponent {
   public classementChoisi =undefined;
 
   public getProducts(sortingCriteria?: string, category?: string) {
+   
     if (sortingCriteria !== undefined) {
       this.classementChoisi = sortingCriteria;
     }
@@ -30,6 +31,7 @@ export class ProductsComponent {
       this.categorieChoisie = undefined;
     }
     this.productsService.getProducts(this.classementChoisi, this.categorieChoisie).then((products) => this.products = products );
+ 
   }
 
 
