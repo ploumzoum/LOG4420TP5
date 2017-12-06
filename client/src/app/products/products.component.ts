@@ -16,7 +16,7 @@ export class ProductsComponent {
     });
   }
   public categorieChoisie =undefined;
-  public classementChoisi =undefined;
+  public classementChoisi ='price-asc';
 
   public getProducts(sortingCriteria?: string, category?: string) {
    
