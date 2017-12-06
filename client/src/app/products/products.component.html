@@ -3,19 +3,19 @@
     <h2>Catégories</h2>
     <div class="btn-group vertical" id="product-categories">
       <button (click)="getProducts(undefined, 'cameras')">Appareils photo</button>
-      <button>Consoles</button>
-      <button>Écrans</button>
-      <button>Ordinateurs</button>
-      <button class="selected">Tous les produits</button>
+      <button (click)="getProducts(undefined, 'consoles')">Consoles</button>
+      <button (click)="getProducts(undefined, 'screens')">Écrans</button>
+      <button (click)="getProducts(undefined, 'computers')">Ordinateurs</button>
+      <button class="selected" (click)="getProducts(undefined, 'all')">Tous les produits</button>
     </div>
   </section>
   <section>
     <h2>Classement</h2>
     <div class="btn-group vertical" id="product-criteria">
-      <button class="selected">Prix (bas-haut)</button>
-      <button>Prix (haut-bas)</button>
-      <button>Nom (A-Z)</button>
-      <button>Nom (Z-A)</button>
+      <button class="selected" (click)="getProducts('price-asc', undefined)">Prix (bas-haut)</button>
+      <button (click)="getProducts('price-dsc', undefined)">Prix (haut-bas)</button>
+      <button (click)="getProducts('alpha-asc', undefined)">Nom (A-Z)</button>
+      <button (click)="getProducts('alpha-dsc', undefined)">Nom (Z-A)</button>
     </div>
   </section>
 </section>

@@ -16,8 +16,20 @@ export class ProductsComponent {
       console.log(this.products);
     });
   }
+  public categorieChoisie =undefined;
+  public classementChoisi =undefined;
+
   public getProducts(sortingCriteria?: string, category?: string) {
-    this.productsService.getProducts(sortingCriteria, category).then((products) => this.products = products );
+    if (sortingCriteria !== undefined) {
+      this.classementChoisi = sortingCriteria;
+    }
+    if (category !== undefined) {
+      this.categorieChoisie = category;
+    }
+    if (category == 'all') {
+      this.categorieChoisie = undefined;
+    }
+    this.productsService.getProducts(this.classementChoisi, this.categorieChoisie).then((products) => this.products = products );
   }
 
 
