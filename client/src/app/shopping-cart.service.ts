@@ -1,7 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Http } from '@angular/http';
 import { Config } from './config';
 
+/**
+ * Defines a shopping-cart Item.
+ */
+export class Item  {
+  productId: number;
+  quantity: number;
+}
 
 
 /**
@@ -9,6 +16,9 @@ import { Config } from './config';
  */
 @Injectable()
 export class ShoppingCartService {
+     public countChange = new EventEmitter();
+
+
      /**
    * Handles the current error.
    *
@@ -27,17 +37,28 @@ export class ShoppingCartService {
   constructor(private http: Http) { }
 
   /**
-   * Gets all the products in the database.
-   *
-   * @param [sortingCriteria]       The sorting criteria to use. If no value is specified, the list returned isn't sorted.
-   * @param [category]              The category of the product. The default value is "all".
-   * @return {Promise<Product[]>}   The category of the product. The default value is "all".
+   * Gets all the items in the shopping-cart.
+   * @return {Promise<Item[]>}   A promise that contains the items in the shopping-cart.
    */
-  getCartContent(): Promise<any> {
-    let url = `${Config.apiUrl}/shopping-cart`;
+  getCartContent(): Promise<Item[]> {
+    const url = `${Config.apiUrl}/shopping-cart`;
     return this.http.get(url)
       .toPromise()
-      .then(products => products.json())
+      .then(products => products.json() as Item[])
       .catch(ShoppingCartService.handleError);
+  }
+
+  /**
+   * Gets the item associated with the item ID specified.
+   *
+   * @param productId               The product ID associated with the item to retrieve.
+   * @returns {Promise<item>}    A promise that contains the itam associated with the ID specified.
+   */
+  getItem(productId: number): Promise<any> {
+    const url = `${Config.apiUrl}/shopping-cart/${productId}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(item => item.json())
+      .catch(() => null);
   }
 }

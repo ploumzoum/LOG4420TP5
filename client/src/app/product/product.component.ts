@@ -13,17 +13,16 @@ import { ShoppingCartService } from './../shopping-cart.service';
 export class ProductComponent implements OnInit {
   private product = new Product;
   private productQuantity = 1;
-  @Output() countChange = new EventEmitter();
+ 
   /**
    * Initializes a new instance of the ProductComponent class.
    *
    * @param route                   The active route.
    */
-  constructor(private route: ActivatedRoute, private productsService: ProductsService) { }
+  constructor(private route: ActivatedRoute, private productsService: ProductsService, priv) { }
 
   public addToCart() {
     console.log(this.productQuantity);
-    this.countChange.emit(this.productQuantity);
   }
   /**
    * Occurs when the component is initialized.
