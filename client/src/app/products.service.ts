@@ -70,4 +70,5 @@ export class ProductsService {
       .then(product => product.json() as Product)
       .catch(() => null);
   }
+  
 }

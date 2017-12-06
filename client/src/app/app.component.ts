@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { ProductComponent } from './product/product.component';
+import { ShoppingCartService } from './shopping-cart.service';
 
 /**
  * Defines the main component of the application.
@@ -16,9 +17,12 @@ export class AppComponent {
   ];
   // TODO: À compléter
   private  count = 0;
-  
-  public updateCount(countDiff: number) {
-    this.count = countDiff;
-    console.log("sdfqsfqsfqfdfq");
+  constructor(private shoppingCartService: ShoppingCartService) {
+    this.shoppingCartService.countChange.subscribe(
+      (quantity: number) => {
+        console.log(quantity);
+        this.count += quantity;
+      }
+    )
   }
 }

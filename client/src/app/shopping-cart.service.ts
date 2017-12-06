@@ -61,4 +61,21 @@ export class ShoppingCartService {
       .then(item => item.json())
       .catch(() => null);
   }
+
+  /**
+   * Add the item associated with the item ID specified and quantity to the shopping-cart.
+   *
+   * @param productId            The product ID associated with the item to add.
+   * @param quantity             The quantity associated with the item to add.
+   * @returns {Promise<item>}    A promise that contains the itam associated with the ID specified.
+   */
+  addItem(productId: number, quantity: number) {
+    console.log("Hi there");
+    const url = `${Config.apiUrl}/shopping-cart`;
+    const body = {productId : productId, quantity : quantity};
+    return this.http.post(url, body)
+      .toPromise()
+      .then(() => this.countChange.emit(quantity))
+      .catch(ShoppingCartService.handleError);
+  }
 }
