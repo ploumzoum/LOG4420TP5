@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService, Product } from './../products.service';
+import { ShoppingCartService } from './../shopping-cart.service';
 
 /**
  * Defines the component responsible to manage the product page.
@@ -10,7 +11,9 @@ import { ProductsService, Product } from './../products.service';
   templateUrl: './product.component.html'
 })
 export class ProductComponent implements OnInit {
-  public product: Product;
+  private product = new Product;
+  private productQuantity = 1;
+  @Output() countChange = new EventEmitter();
   /**
    * Initializes a new instance of the ProductComponent class.
    *
@@ -18,6 +21,10 @@ export class ProductComponent implements OnInit {
    */
   constructor(private route: ActivatedRoute, private productsService: ProductsService) { }
 
+  public addToCart() {
+    console.log(this.productQuantity);
+    this.countChange.emit(this.productQuantity);
+  }
   /**
    * Occurs when the component is initialized.
    */
