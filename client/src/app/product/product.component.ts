@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService, Product } from './../products.service';
 import { ShoppingCartService } from './../shopping-cart.service';
@@ -13,7 +13,7 @@ import { Http } from '@angular/http';
 })
 export class ProductComponent implements OnInit {
   private product = new Product;
-  private productQuantity = 1;
+  private quantity = 1;
   private productId: number;
  
   /**
@@ -24,8 +24,7 @@ export class ProductComponent implements OnInit {
   constructor(private route: ActivatedRoute, private productsService: ProductsService, private shoppingCartService: ShoppingCartService) { }
 
   public addToCart() {
-    console.log(this.productQuantity);
-    this.shoppingCartService.addItem(this.productId, this.productQuantity);
+    this.shoppingCartService.addItem(this.productId, this.quantity);
   }
   /**
    * Occurs when the component is initialized.
@@ -33,8 +32,6 @@ export class ProductComponent implements OnInit {
   ngOnInit() {
     this.productId = +this.route.snapshot.paramMap.get('id');
     // TODO: Compléter la logique pour afficher le produit associé à l'identifiant spécifié (productId).
-    this.productsService.getProduct(this.productId).then((product) => {this.product = product;
-      console.log(this.product);
-    });
+    this.productsService.getProduct(this.productId).then((product) => this.product = product);
   }
 }

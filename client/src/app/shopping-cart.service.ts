@@ -16,7 +16,7 @@ export class Item  {
  */
 @Injectable()
 export class ShoppingCartService {
-     public countChange = new EventEmitter();
+    public countChange = new EventEmitter();
 
 
      /**
