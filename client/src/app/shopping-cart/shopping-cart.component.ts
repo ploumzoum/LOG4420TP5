@@ -12,7 +12,6 @@ export class ShoppingCartComponent {
   private CartContent: Array<Item>;
   constructor(private shoppinCartService: ShoppingCartService) {
     this.shoppinCartService.getCartContent().then((content) => {this.CartContent = content;
-      console.log(content);
     });
   }
 }

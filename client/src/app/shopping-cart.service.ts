@@ -64,8 +64,7 @@ export class ShoppingCartService {
     const url = `${Config.apiUrl}/shopping-cart/${productId}`;
     return this.http.get(url, this.options)
       .toPromise()
-      .then(item => {item.json() as Item;
-      console.log(item); })
+      .then(item => {item.json() as Item; })
       .catch(() => null);
   }
 
@@ -86,7 +85,6 @@ export class ShoppingCartService {
            .then(() => this.countChange.emit(quantity))
            .catch(ShoppingCartService.handleError);
          } else {
-           console.log(JSON.stringify(data));
            return this.updateItemQuantity(productId, quantity, data);
          }
        });
