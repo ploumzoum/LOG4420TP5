@@ -13,7 +13,7 @@ export class ProductsComponent implements OnInit {
   constructor(private productsService: ProductsService) {
   }
   public categorieChoisie =undefined;
-  public classementChoisi =undefined;
+  public classementChoisi ='price-asc';
 
   public getProducts(sortingCriteria?: string, category?: string) {
    

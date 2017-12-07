@@ -12,7 +12,7 @@
   <section>
     <h2>Classement</h2>
     <div class="btn-group vertical" id="product-criteria">
-      <button [class.selected] = "undefined ===classementChoisi"class="selected" (click)="getProducts('price-asc', undefined)">Prix (bas-haut)</button>
+      <button [class.selected] = "'price-asc' ===classementChoisi"class="selected" (click)="getProducts('price-asc', undefined)">Prix (bas-haut)</button>
       <button [class.selected] = "'price-dsc' ===classementChoisi" (click)="getProducts('price-dsc', undefined)">Prix (haut-bas)</button>
       <button [class.selected] = "'alpha-asc' ===classementChoisi"(click)="getProducts('alpha-asc', undefined)">Nom (A-Z)</button>
       <button [class.selected] = "'alpha-dsc' ===classementChoisi"(click)="getProducts('alpha-dsc', undefined)">Nom (Z-A)</button>
