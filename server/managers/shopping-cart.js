@@ -29,6 +29,7 @@ self.initialize = function(session) {
  * @return {Array}  An array that contains the items.
  */
 self.getItems = function() {
+  console.log(items);
   return items;
 };
 

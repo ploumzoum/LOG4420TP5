@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductsService, Product } from './../products.service';
 /**
  * Defines the component responsible to manage the display of the products page.
@@ -7,13 +7,10 @@ import { ProductsService, Product } from './../products.service';
   selector: 'products',
   templateUrl: './products.component.html'
 })
-export class ProductsComponent {
+export class ProductsComponent implements OnInit {
   // TODO: À compléter
-  private products: Array<Product>;
+  private products = [];
   constructor(private productsService: ProductsService) {
-    this.productsService.getProducts().then((products) => {this.products = products;
-      console.log(this.products);
-    });
   }
   public categorieChoisie =undefined;
   public classementChoisi =undefined;
@@ -30,8 +27,11 @@ export class ProductsComponent {
       this.categorieChoisie = undefined;
     }
     this.productsService.getProducts(this.classementChoisi, this.categorieChoisie).then((products) => this.products = products );
- 
   }
 
-
+  ngOnInit() {
+    this.productsService.getProducts().then((products) => {this.products = products;
+      console.log(this.products);
+    });
+  }
 }

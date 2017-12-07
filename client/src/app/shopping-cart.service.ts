@@ -1,5 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, RequestOptions, Headers } from '@angular/http';
 import { Config } from './config';
 
 /**
@@ -17,6 +17,12 @@ export class Item  {
 @Injectable()
 export class ShoppingCartService {
     public countChange = new EventEmitter();
+    public headers = new Headers({ 'Content-Type': 'application/json' });
+
+    /**
+     * Il est nécessaire de mettre la propriété "withCredientials" à TRUE.
+     */
+    public options = new RequestOptions({ headers: this.headers, withCredentials: true});
 
 
      /**
@@ -58,7 +64,8 @@ export class ShoppingCartService {
     const url = `${Config.apiUrl}/shopping-cart/${productId}`;
     return this.http.get(url)
       .toPromise()
-      .then(item => item.json())
+      .then(item => {item.json() as Item;
+      console.log(item); })
       .catch(() => null);
   }
 
@@ -67,13 +74,32 @@ export class ShoppingCartService {
    *
    * @param productId            The product ID associated with the item to add.
    * @param quantity             The quantity associated with the item to add.
-   * @returns {Promise<item>}    A promise that contains the itam associated with the ID specified.
    */
   addItem(productId: number, quantity: number) {
-    console.log("Hi there");
     const url = `${Config.apiUrl}/shopping-cart`;
     const body = {productId : productId, quantity : quantity};
-    return this.http.post(url, body)
+    let temp;
+    this.getItem(productId)
+      .then((data: any) => {
+        temp = data;
+        if (temp === null) {
+          return this.http.post(url, JSON.stringify(body), this.options)
+          .toPromise()
+          .then(() => this.countChange.emit(quantity))
+          .catch(ShoppingCartService.handleError);
+        } else {
+          return this.updateItemQuantity(productId, quantity);
+        }
+      });
+  }
+
+  /**
+   *  Updates the quantity associated with the specified product ID.
+   */
+  updateItemQuantity(productId: number, quantity: number) {
+    const url = `${Config.apiUrl}/shopping-cart/${productId}`;
+    const body = {quantity: quantity};
+    return this.http.put(url, JSON.stringify(body), this.options)
       .toPromise()
       .then(() => this.countChange.emit(quantity))
       .catch(ShoppingCartService.handleError);
