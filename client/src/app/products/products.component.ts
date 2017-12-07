@@ -16,7 +16,6 @@ export class ProductsComponent implements OnInit {
   public classementChoisi ='price-asc';
 
   public getProducts(sortingCriteria?: string, category?: string) {
-   
     if (sortingCriteria !== undefined) {
       this.classementChoisi = sortingCriteria;
     }

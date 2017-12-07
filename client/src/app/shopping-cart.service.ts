@@ -62,7 +62,7 @@ export class ShoppingCartService {
    */
   getItem(productId: number): Promise<any> {
     const url = `${Config.apiUrl}/shopping-cart/${productId}`;
-    return this.http.get(url)
+    return this.http.get(url, this.options)
       .toPromise()
       .then(item => {item.json() as Item;
       console.log(item); })
@@ -78,27 +78,27 @@ export class ShoppingCartService {
   addItem(productId: number, quantity: number) {
     const url = `${Config.apiUrl}/shopping-cart`;
     const body = {productId : productId, quantity : quantity};
-    let temp;
     this.getItem(productId)
-      .then((data: any) => {
-        temp = data;
-        if (temp === null) {
-          return this.http.post(url, JSON.stringify(body), this.options)
-          .toPromise()
-          .then(() => this.countChange.emit(quantity))
-          .catch(ShoppingCartService.handleError);
-        } else {
-          return this.updateItemQuantity(productId, quantity);
-        }
-      });
+       .then((data: Item) => {
+         if (data === null) {
+           return this.http.post(url, JSON.stringify(body), this.options)
+           .toPromise()
+           .then(() => this.countChange.emit(quantity))
+           .catch(ShoppingCartService.handleError);
+         } else {
+           console.log(JSON.stringify(data));
+           return this.updateItemQuantity(productId, quantity, data);
+         }
+       });
   }
-
   /**
    *  Updates the quantity associated with the specified product ID.
    */
-  updateItemQuantity(productId: number, quantity: number) {
+  updateItemQuantity(productId: number, quantity: number, data: Item) {
     const url = `${Config.apiUrl}/shopping-cart/${productId}`;
+    quantity += data.quantity;
     const body = {quantity: quantity};
+    
     return this.http.put(url, JSON.stringify(body), this.options)
       .toPromise()
       .then(() => this.countChange.emit(quantity))

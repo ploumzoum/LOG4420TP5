@@ -64,7 +64,7 @@ export class OrderComponent implements OnInit {
     this.order.email = this.email;
     this.order.phone = this.phone;
     console.log("AAAAAAAAAAAAAAAAAAAAA : ", this.order.firstName);
-    //this.orderService.addOrder(this.order);
+    this.orderService.addOrder(this.order);
 
     if (!this.orderForm.valid()) {
       return ;
